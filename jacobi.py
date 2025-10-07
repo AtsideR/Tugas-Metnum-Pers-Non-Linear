@@ -1,23 +1,30 @@
 import math
 
-def fx(x, y):
-    return (10 - x ** 2) / y
+def jacobi_method(tol=1e-6, max_iter=100):
+    x, y = 1.5, 3.5  # tebakan awal
+    print("Iter |      x        |      y        |    Δx        |    Δy")
+    print("-------------------------------------------------------------")
 
-def fy(x, y):
-    arg = (57 - y) / (3 * x) if x != 0 else -1
-    return math.sqrt(arg) if arg >= 0 else float('nan')
+    for r in range(1, max_iter + 1):
+        try:
+            x_new = (10 - x**2) / y
+            y_new = math.sqrt((57 - y) / (3 * x))
+        except (ValueError, ZeroDivisionError):
+            print(f"Iterasi ke-{r}: Error matematis (akar negatif / pembagian 0)")
+            return
 
-def jacobi(x0, y0, tol=1e-6, maxiter=200):
-    x, y = x0, y0
-    history = [(x, y)]
-    for k in range(1, maxiter + 1):
-        x_new = fx(x, y)
-        y_new = fy(x, y)
-        history.append((x_new, y_new))
+        dx = abs(x_new - x)
+        dy = abs(y_new - y)
 
-        if not (math.isfinite(x_new) and math.isfinite(y_new)):
-            return None, history, False, k
-        if max(abs(x_new - x), abs(y_new - y)) < tol:
-            return (x_new, y_new), history, True, k
+        print(f"{r:3d} | {x_new:11.6f} | {y_new:11.6f} | {dx:10.6f} | {dy:10.6f}")
+
+        if max(dx, dy) < tol:
+            print(f"\n✅ Konvergen pada iterasi ke-{r}: x = {x_new:.6f}, y = {y_new:.6f}")
+            return
+
         x, y = x_new, y_new
-    return (x, y), history, False, maxiter
+
+    print("\n❌ Tidak konvergen sampai iterasi maksimum.")
+
+if __name__ == "__main__":
+    jacobi_method()

@@ -1,29 +1,42 @@
 import numpy as np
 
-def F(vec):
-    x, y = vec
+def F(x, y):
     return np.array([
-        x * y + x**2 - 10,
-        3 * x * y**2 + y - 57
-    ], dtype=float)
+        x**2 + x*y - 10,
+        3*x*y**2 + y - 57
+    ])
 
-def J(vec):
-    x, y = vec
+def J(x, y):
     return np.array([
-        [y + 2*x, x],
+        [2*x + y, x],
         [3*y**2, 6*x*y + 1]
-    ], dtype=float)
+    ])
 
-def newton(x0, y0, tol=1e-6, maxiter=100):
-    x, y = x0, y0
-    history = [(x, y)]
-    for k in range(1, maxiter + 1):
-        Fv = F((x, y))
-        Jv = J((x, y))
-        delta = np.linalg.solve(Jv, -Fv)
-        x_new, y_new = x + delta[0], y + delta[1]
-        history.append((x_new, y_new))
-        if max(abs(delta[0]), abs(delta[1])) < tol:
-            return (x_new, y_new), history, True, k
+def newton_raphson(tol=1e-6, max_iter=100):
+    x, y = 1.5, 3.5
+    print("Iter |        x        |        y        |      Δx        |      Δy")
+    print("-------------------------------------------------------------------")
+
+    for r in range(1, max_iter + 1):
+        try:
+            Fx = F(x, y)
+            Jx = J(x, y)
+            delta = np.linalg.solve(Jx, -Fx)
+        except np.linalg.LinAlgError:
+            print(f"Iterasi ke-{r}: Matriks singular (tidak dapat diselesaikan)")
+            return
+
+        dx, dy = delta
+        x_new, y_new = x + dx, y + dy
+        print(f"{r:3d} | {x_new:13.8f} | {y_new:13.8f} | {dx:12.8f} | {dy:12.8f}")
+
+        if max(abs(dx), abs(dy)) < tol:
+            print(f"\n✅ Konvergen pada iterasi ke-{r}: x = {x_new:.6f}, y = {y_new:.6f}")
+            return
+
         x, y = x_new, y_new
-    return (x, y), history, False, maxiter
+
+    print("\n❌ Tidak konvergen sampai iterasi maksimum.")
+
+if __name__ == "__main__":
+    newton_raphson()
