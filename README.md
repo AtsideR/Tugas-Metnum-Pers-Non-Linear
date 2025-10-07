@@ -1,4 +1,4 @@
-Tugas Metode Numerik 
+#Tugas Metode Numerik 
 Persamaan Non-Linear
 
 Nama : Redista Rakha Izza
