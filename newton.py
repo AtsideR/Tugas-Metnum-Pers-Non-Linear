@@ -31,12 +31,12 @@ def newton_raphson(tol=1e-6, max_iter=100):
         print(f"{r:3d} | {x_new:13.8f} | {y_new:13.8f} | {dx:12.8f} | {dy:12.8f}")
 
         if max(abs(dx), abs(dy)) < tol:
-            print(f"\n✅ Konvergen pada iterasi ke-{r}: x = {x_new:.6f}, y = {y_new:.6f}")
+            print(f"\n Konvergen pada iterasi ke-{r}: x = {x_new:.6f}, y = {y_new:.6f}")
             return
 
         x, y = x_new, y_new
 
-    print("\n❌ Tidak konvergen sampai iterasi maksimum.")
+    print("\n Tidak konvergen sampai iterasi maksimum.")
 
 if __name__ == "__main__":
     newton_raphson()

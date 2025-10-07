@@ -19,12 +19,12 @@ def jacobi_method(tol=1e-6, max_iter=100):
         print(f"{r:3d} | {x_new:11.6f} | {y_new:11.6f} | {dx:10.6f} | {dy:10.6f}")
 
         if max(dx, dy) < tol:
-            print(f"\n✅ Konvergen pada iterasi ke-{r}: x = {x_new:.6f}, y = {y_new:.6f}")
+            print(f"\n Konvergen pada iterasi ke-{r}: x = {x_new:.6f}, y = {y_new:.6f}")
             return
 
         x, y = x_new, y_new
 
-    print("\n❌ Tidak konvergen sampai iterasi maksimum.")
+    print("\n Tidak konvergen sampai iterasi maksimum.")
 
 if __name__ == "__main__":
     jacobi_method()

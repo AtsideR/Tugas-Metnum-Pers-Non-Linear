@@ -28,13 +28,13 @@ def secant_method(tol=1e-6, max_iter=100):
         print(f"{r:3d} | {x2:13.8f} | {y2:13.8f} | {dx:12.8f} | {dy:12.8f}")
 
         if max(abs(dx), abs(dy)) < tol:
-            print(f"\n✅ Konvergen pada iterasi ke-{r}: x = {x2:.6f}, y = {y2:.6f}")
+            print(f"\n Konvergen pada iterasi ke-{r}: x = {x2:.6f}, y = {y2:.6f}")
             return
 
         x0, y0 = x1, y1
         x1, y1 = x2, y2
 
-    print("\n❌ Tidak konvergen sampai iterasi maksimum.")
+    print("\n Tidak konvergen sampai iterasi maksimum.")
 
 if __name__ == "__main__":
     secant_method()
